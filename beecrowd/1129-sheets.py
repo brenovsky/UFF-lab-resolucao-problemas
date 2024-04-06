@@ -1,38 +1,42 @@
 outputs = []
-while(True):
+ciclo = True
+
+while(ciclo):
     n = int(input())
     
     if (n == 0):
-        break
+        ciclo = False
 
-    for i in range(n):
-        answers = list(map(int, input().split())) #cadastrar respostas
+    else:
+        for i in range(n):
+            answers = list(map(int, input().split())) #cadastrar respostas
 
-        black = 0 #quantidade de pretos identificados (declaracao)
-        for j in range(5):
-            if answers[j] <= 127: #a alternativa é preta? se sim, adiciona 1 no contador
-                black += 1
-                if black > 1: # se contador > 1, significa que há mais de uma alternativa marcada (invalido)
-                    outputs.append("*") #insere asterisco
-                    del(outputs[-2]) #apaga a letra que inserimos no outputs.append(j)
-                    break #quebra o loop
+            for j in range(5):
+                if answers[j] <= 127: #a alternativa é preta?
+                    answers[j] = 0
+                else: # se não, coloca 1 na lista
+                    answers[j] = 1
             
-                outputs.append(j)
+            if (sum(answers) == 4): # se haver 4 brancas, tem uma preta
+                indice = answers.index(0) #índice da resposta certa
+                
+                if (indice == 0):
+                    outputs.append("A")
+
+                elif (indice == 1):
+                    outputs.append("B")
+
+                elif (indice == 2):
+                    outputs.append("C")
+
+                elif (indice == 3):
+                    outputs.append("D")
+
+                elif (indice == 4):
+                    outputs.append("E")
+
+            else:
+                outputs.append("*")
 
 for i in range(len(outputs)):
-    if outputs[i] == 0:
-        outputs[i] = "A"
-
-    if outputs[i] == 1:
-        outputs[i] = "B"
-
-    if outputs[i] == 2:
-        outputs[i] = "C"
-
-    if outputs[i] == 3:
-        outputs[i] = "D"
-
-    if outputs[i] == 4:
-        outputs[i] = "E"
-
-print(outputs)
+    print(outputs[i])
